@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss'
-import { getAllUsers } from '../../services/userService';
+import { getAllUsers, createNewUserService } from '../../services/userService';
 import ModalUser from './ModalUser';
 
 
@@ -12,11 +12,14 @@ class UserManage extends Component {
         super(props);
         this.state = {
             arrUsers: [],
-            isOpenModalUser : false,
+            isOpenModalUser: false,
 
         }
     }
     async componentDidMount() {
+        await this.getAllUsersFromReact();
+    }
+    getAllUsersFromReact =async () => {
         let response = await getAllUsers('All');
         if (response && response.errCode === 0) {
             this.setState({
@@ -35,6 +38,22 @@ class UserManage extends Component {
             isOpenModalUser: !this.state.isOpenModalUser,
         })
     }
+    createNewUser = async(data) => {
+        try {
+           let response = await createNewUserService(data)  
+           if (response && response.errCode !== 0) {
+            alert(response.errMessage);
+           }else {
+            await this.getAllUsersFromReact();
+            this.setState({
+                isOpenModalUser: false,
+            })
+           }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     /** Life cycle
      * Run component: 
      * 1. Run construct -> init state
@@ -50,9 +69,9 @@ class UserManage extends Component {
         return (
             <div className="users-container">
                 <ModalUser
-                isOpen={this.state.isOpenModalUser}
-                toggleFromParent={this.toggleUserModal}
-                test = {'abc'}
+                    isOpen={this.state.isOpenModalUser}
+                    toggleFromParent={this.toggleUserModal}
+                    createNewUser={this.createNewUser}
                 ></ModalUser>
                 <div className='title text-center'>
                     Manage users with Huong dep trai
@@ -64,6 +83,8 @@ class UserManage extends Component {
                 </div>
                 <div className='user-table mt-3 mx-3'>
                     <table id="customers">
+                    <tbody>
+
                         <tr>
                             <th>Email</th>
                             <th>First Name</th>
@@ -72,23 +93,23 @@ class UserManage extends Component {
                             <th>Genders</th>
                             <th>Actions</th>
                         </tr>
-                        {arrUsers && arrUsers.map((item, index) => {
-                            return (
-                                <tr>
-                                    <td>{item.email}</td>
-                                    <td>{item.firstName}</td>
-                                    <td>{item.lastName}</td>
-                                    <td>{item.address}</td>
-                                    <td>{item.gender === 0 ? 'Male' : 'Female'}</td>
-                                    <td>
-                                        <button className='btn-edit'><i class="fas fa-edit"></i></button>
-                                        <button className='btn-delete'><i className="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                        }
-
+                            {arrUsers && arrUsers.map((item, index) => {
+                                return (
+                                    <tr>
+                                        <td>{item.email}</td>
+                                        <td>{item.firstName}</td>
+                                        <td>{item.lastName}</td>
+                                        <td>{item.address}</td>
+                                        <td>{item.gender === 0 ? 'Male' : 'Female'}</td>
+                                        <td>
+                                            <button className='btn-edit'><i className="fas fa-edit"></i></button>
+                                            <button className='btn-delete'><i className="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            }
+                        </tbody>
                     </table>
                 </div>
 

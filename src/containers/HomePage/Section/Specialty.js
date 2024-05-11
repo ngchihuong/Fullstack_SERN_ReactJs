@@ -7,6 +7,8 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import SpecialtyImg from '../../../assets/specialty/co-xuong-khop.jpg'
+
 class Specialty extends Component {
 
 
@@ -15,32 +17,46 @@ class Specialty extends Component {
             dots: false,
             infinite: true,
             speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1
+            slidesToShow: 4,
+            slidesToScroll: 2,
         };
         return (
             <div className='section-specialty'>
-                <div className='specialty-content'>
-                    <Slider {...settings}>
-                        <div className='img'>
-                            <h3>1</h3>
-                        </div>
-                        <div className='img'>
-                            <h3>2</h3>
-                        </div>
-                        <div className='img'>
-                            <h3>3</h3>
-                        </div>
-                        <div className='img'>
-                            <h3>4</h3>
-                        </div>
-                        <div className='img'>
-                            <h3>5</h3>
-                        </div>
-                        <div className='img'>
-                            <h3>6</h3>
-                        </div>
-                    </Slider>
+                <div className='specialty-container'>
+                    <div className='specialty-header'>
+                        <span className='title-section'>Chuyên khoa phổ biến</span>
+                        <button className='btn-section'>xem thêm</button>
+                    </div>
+                    <div className='specialty-body'>
+
+                        <Slider {...settings}>
+                            <div className='specialty-customize'>
+                                <div className="bg-image" ></div>
+                                <div>Co Xuong khop 1</div>
+                            </div>
+                            <div className='specialty-customize'>
+                                <div className="bg-image"></div>
+                                <div>Co Xuong khop 2</div>
+                            </div>
+                            <div className='specialty-customize'>
+                                <div className="bg-image" ></div>
+                                <div>Co Xuong khop 3</div>
+                            </div>
+                            <div className='specialty-customize'>
+                                <div className="bg-image" ></div>
+                                <div>Co Xuong khop 4 </div>
+                            </div>
+                            <div className='specialty-customize'>
+                                <div className="bg-image" ></div>
+                                <div>Co Xuong khop 5</div>
+                            </div>
+                            <div className='specialty-customize'>
+                                <div className="bg-image" ></div>
+                                <div>Co Xuong khop 6</div>
+                            </div>
+                        </Slider>
+                    </div>
+
                 </div>
             </div>
         );

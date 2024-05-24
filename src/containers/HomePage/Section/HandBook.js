@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import Slider from 'react-slick';
 
 
-class handbook extends Component {
+class Handbook extends Component {
 
 
     render() {
@@ -64,4 +64,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(handbook);
+export default connect(mapStateToProps, mapDispatchToProps)(Handbook);

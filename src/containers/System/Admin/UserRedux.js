@@ -8,17 +8,32 @@ class UserRedux extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            genderArr: []
+            genderArr: [],
+            roleArr: [],
+            positionArr: [],
         }
     }
 
     async componentDidMount() {
         try {
             let res = await getAllCodeService('gender')
+            let res2 = await getAllCodeService('role')
+            let res3 = await getAllCodeService('position')
+            // console.log("res2", res2);
             if (res && res.errCode === 0) {
-                console.log("res", res);
+                // console.log("res", res);
                 this.setState({
                     genderArr: res.data
+                })
+            }
+            if (res2 && res2.errCode === 0) {
+                this.setState({
+                    roleArr: res2.data
+                })
+            }
+            if (res3 && res3.errCode === 0) {
+                this.setState({
+                    positionArr: res3.data
                 })
             }
         } catch (error) {
@@ -29,6 +44,8 @@ class UserRedux extends Component {
 
     render() {
         let genders = this.state.genderArr;
+        let roles = this.state.roleArr;
+        let positions = this.state.positionArr
         let language = this.props.language
         return (
             <div className='user-redux-container'>
@@ -79,15 +96,21 @@ class UserRedux extends Component {
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.position" />: </label>
                                 <select className='form-control'>
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
+                                    {positions && positions.map((item, index) => {
+                                        return (
+                                            <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        )
+                                    })}
                                 </select>
                             </div>
                             <div className='col-3'>
                                 <label><FormattedMessage id="manage-user.role" />: </label>
                                 <select className='form-control'>
-                                    <option selected>Choose...</option>
-                                    <option>...</option>
+                                    {roles && roles.map((item, index) => {
+                                        return (
+                                            <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        )
+                                    })}
                                 </select>
                             </div>
                             <div className='col-3'>

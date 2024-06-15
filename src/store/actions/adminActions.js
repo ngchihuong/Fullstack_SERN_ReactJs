@@ -1,7 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     getAllCodeService, createNewUserService, getAllUsers,
-    deleteUserService
+    deleteUserService, editUserService
 } from "../../services/userService"
 import { toast } from 'react-toastify';
 
@@ -90,7 +90,7 @@ export const createNewUser = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await createNewUserService(data)
-            console.log("check create user", res);
+            // console.log("check create user", res);
             if (res && res.errCode === 0) {
                 toast.success("😼Create a new user is succed!");
                 dispatch(saveUserSuccess())
@@ -140,7 +140,7 @@ export const deleteAUser = (userId) => {
     return async (dispatch, getState) => {
         try {
             let res = await deleteUserService(userId)
-            console.log("check create user", res);
+            // console.log("check create user", res);
             if (res && res.errCode === 0) {
                 toast.success("😼Delete user is succed!");
                 dispatch(deleteUserSuccess())
@@ -160,4 +160,30 @@ export const deleteUserSuccess = () => ({
 })
 export const deleteUserFailed = () => ({
     type: actionTypes.FETCH_ALL_USER_FAILED
+})
+
+export const editAUser = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await editUserService(data)
+            console.log("check create user", res, data);
+            if (res && res.errCode === 0) {
+                toast.success("😼Edit user is succed!");
+                dispatch(editUserSuccess())
+                dispatch(fetchAllUsersStart());
+            } else {
+                dispatch(editUserFailed())
+                toast.error("😼Update user is error!");
+            }
+        } catch (error) {   
+            dispatch(editUserFailed());
+            console.log("editUserFailed error", error);
+        }
+    }
+}
+export const editUserSuccess = () => ({
+    type: actionTypes.EDIT_USER_SUCCESS
+})
+export const editUserFailed = () => ({
+    type: actionTypes.EDIT_USER_FAILED
 })

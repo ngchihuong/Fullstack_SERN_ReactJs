@@ -24,7 +24,9 @@
         background: #e8e8e8 !important;
     }
 }
-
+.slick-disabled {
+    display: none !important;
+}
 .slick-prev::before,
 .slick-next::before {
     color: red !important;

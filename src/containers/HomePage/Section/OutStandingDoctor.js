@@ -31,8 +31,8 @@ class OutStandingDoctor extends Component {
             <div className='section-share section-outstanding-doctor'>
                 <div className='section-container'>
                     <div className='section-header'>
-                        <span className='title-section'>Bác sĩ nổi bật tuần qua</span>
-                        <button className='btn-section'>xem thêm</button>
+                        <span className='title-section'> <FormattedMessage id="homepage.outstanding-doctor" /> </span>
+                        <button className='btn-section'> <FormattedMessage id="homepage.more-infor" /></button>
                     </div>
                     <div className='section-body'>
 

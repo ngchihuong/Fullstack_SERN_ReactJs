@@ -134,12 +134,17 @@ class ManageSchedule extends Component {
             doctorId: selectedDoctor.value,
             formatedDate: formatedDate
         });
-        console.log("check res save schedule", res);
-        console.log("check result", result);
+        if (res && res.errCode === 0) {
+            toast.success("Save Bulk Schedule Doctor Success!")
+        } else {
+            toast.error("Error Save Bulk Schedule Doctor!")
+            console.log("Error Save Bulk Schedule Doctor!", res);
+        }
     }
     render() {
         let { rangeTime } = this.state;
         let { language } = this.props;
+        let yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
         // console.log("check state sche", rangeTime);
 
         return (
@@ -164,7 +169,7 @@ class ManageSchedule extends Component {
                                 className='form-control'
                                 value={this.state.currentDate}
                                 // selected={this.state.currentDate}
-                                minDate={new Date()}
+                                minDate={yesterday}
                             />
                         </div>
                         <div className='col-12 pick-hour-container'>

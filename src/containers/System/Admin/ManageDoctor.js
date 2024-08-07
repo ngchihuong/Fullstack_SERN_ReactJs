@@ -145,14 +145,51 @@ class ManageDoctor extends Component {
     }
     handleChangeSelect = async (selectedDoctor) => {
         this.setState({ selectedDoctor });
+        let { listPayment, listPrice, listProvince } = this.state;
         let res = await getDetailInforDoctor(selectedDoctor.value)
         if (res && res.errCode === 0 && res.data && res.data.Markdown) {
             let markdown = res.data.Markdown;
+            let addressClinic, nameClinic, paymentId,
+                priceId, provinceId, note, selectedPayment,
+                selectedPrice, selectedProvince = '';
+
+            if (res.data.Doctor_Infor) {
+                addressClinic = res.data.Doctor_Infor.addressClinic;
+                nameClinic = res.data.Doctor_Infor.nameClinic;
+                note = res.data.Doctor_Infor.note;
+                paymentId = res.data.Doctor_Infor.paymentId;
+                priceId = res.data.Doctor_Infor.priceId;
+                provinceId = res.data.Doctor_Infor.provinceId;
+
+                selectedPayment = listPayment.find(
+                    item => {
+                        return item && item.value === paymentId;
+                    }
+                )
+                selectedPrice = listPrice.find(
+                    item => {
+                        return item && item.value === priceId;
+                    }
+                )
+                selectedProvince = listProvince.find(
+                    item => {
+                        return item && item.value === provinceId;
+                    }
+                )
+                console.log("check arr", listPayment, paymentId);
+
+            }
             this.setState({
                 contentHTML: markdown.contentHTML,
                 contentMarkdown: markdown.contentMarkdown,
                 description: markdown.description,
-                hasOldData: true
+                hasOldData: true,
+                addressClinic: addressClinic,
+                nameClinic: nameClinic,
+                note: note,
+                selectedPayment: selectedPayment,
+                selectedPrice: selectedPrice,
+                selectedProvince: selectedProvince
             })
         } else {
             this.setState({
@@ -160,6 +197,9 @@ class ManageDoctor extends Component {
                 contentMarkdown: '',
                 description: '',
                 hasOldData: false,
+                addressClinic: '',
+                nameClinic: '',
+                note: ''
             })
         }
         // console.log("learn hoidanit check res", res);

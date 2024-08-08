@@ -28,9 +28,15 @@
         }
 
         .short-infor {
-            span {
+            text-transform: uppercase;
+            .detail {
                 cursor: pointer;
-                color: rgb(147, 147, 243);
+                color: rgb(117, 117, 244);
+                text-transform: none;
+                margin-left: 5px;
+            }
+            .currency {
+                margin: 0 5px;
             }
         }
 
